@@ -1,13 +1,15 @@
-import agh.ics.oop.Animal;
-import agh.ics.oop.MapDirection;
-import agh.ics.oop.MoveDirection;
-import agh.ics.oop.Vector2d;
+import agh.ics.oop.interfaces.IWorldMap;
+import agh.ics.oop.models.Animal;
+import agh.ics.oop.enums.MapDirection;
+import agh.ics.oop.enums.MoveDirection;
+import agh.ics.oop.models.RectangularMap;
+import agh.ics.oop.models.Vector2d;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 import java.util.List;
-import static agh.ics.oop.OptionParser.parse;
+import static agh.ics.oop.tools.OptionParser.parse;
 
 public class AnimalIntegrationTest {
 
@@ -15,9 +17,11 @@ public class AnimalIntegrationTest {
     private static List<MoveDirection> d1;
     private static List<MoveDirection> d2;
     private static List<MoveDirection> d3;
+    private static IWorldMap map;
 
     @BeforeAll
     public static void initializeDirections() {
+        map = new RectangularMap(10, 10);
         d1 = List.of(
                 MoveDirection.LEFT,
                 MoveDirection.LEFT,
@@ -47,7 +51,7 @@ public class AnimalIntegrationTest {
 
     @BeforeEach
     public void initializeAnimal() {
-        sheepDolly = new Animal();
+        sheepDolly = new Animal(map);
     }
 
     @Test
@@ -65,13 +69,13 @@ public class AnimalIntegrationTest {
     @Test
     public void positioningTest() {
         sheepDolly.move(d1);
-        assertTrue(sheepDolly.isAt(new Vector2d(2, 2)));
+        assertTrue(sheepDolly.isAt(new Vector2d(0, 0)));
 
         sheepDolly.move(d2);
-        assertTrue(sheepDolly.isAt(new Vector2d(2, 3)));
+        assertTrue(sheepDolly.isAt(new Vector2d(0, 1)));
 
         sheepDolly.move(d3);
-        assertTrue(sheepDolly.isAt(new Vector2d(2, 3)));
+        assertTrue(sheepDolly.isAt(new Vector2d(0, 2)));
     }
 
     @Test

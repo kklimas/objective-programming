@@ -1,6 +1,9 @@
-package agh.ics.oop;
+package agh.ics.oop.tools;
+
+import agh.ics.oop.enums.MoveDirection;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class OptionParser {
     public static ArrayList<MoveDirection> parse(String[] strings) {

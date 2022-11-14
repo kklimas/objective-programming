@@ -1,15 +1,22 @@
-package agh.ics.oop;
+package agh.ics.oop.enums;
+
+import agh.ics.oop.models.Vector2d;
 
 public enum MapDirection {
-    NORTH, SOUTH, WEST, EAST;
+    NORTH("^"),
+    SOUTH("v"),
+    WEST("<"),
+    EAST(">");
 
+    private final String value;
+
+    MapDirection(String value) {
+        this.value = value;
+    }
+
+    @Override
     public String toString(){
-        return switch(this) {
-            case NORTH -> "North";
-            case SOUTH -> "South";
-            case WEST -> "West";
-            default -> "East";
-        };
+        return value;
     }
 
     public MapDirection next() {

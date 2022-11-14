@@ -1,20 +1,22 @@
 package agh.ics.oop;
-import static agh.ics.oop.OptionParser.parse;
+import agh.ics.oop.enums.MoveDirection;
+import agh.ics.oop.interfaces.IEngine;
+import agh.ics.oop.interfaces.IWorldMap;
+import agh.ics.oop.models.RectangularMap;
+import agh.ics.oop.models.Vector2d;
+import agh.ics.oop.tools.SimulationEngine;
 
-// 10.
-// * rozwiazanie prostsze - wystarczy zaimplementowac metode ktora dla danej listy zwierzat
-// sprawdza czy ktores z pozostalych przypadkiem nie stoi na miejscu na ktore
-// chcemy sie ruszyc
-// ** szybsze rozwiazanie - stworzyc HashMape (klucz, wartosc) -> (pozycja, zwierze) i sprawdzac czy dany klucz istnieje
-// (pozycja na ktora chcemy sie ruszyc)
+import java.util.List;
+
+import static agh.ics.oop.tools.OptionParser.parse;
 
 public class World {
     public static void main(String[] args) {
-
-        var animal = new Animal();
-        var directions = parse(args);
-        System.out.println("Initial position: " + animal);
-        animal.move(directions);
-        System.out.println("\nFinal position: " + animal);
+        List<MoveDirection> directions = parse(args);
+        IWorldMap map = new RectangularMap(10, 5);
+        Vector2d[] positions = { new Vector2d(0,0)};
+        IEngine engine = new SimulationEngine(directions, map, positions);
+        engine.run();
+        System.out.println(map);
     }
 }

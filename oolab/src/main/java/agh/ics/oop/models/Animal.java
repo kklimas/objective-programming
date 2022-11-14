@@ -1,17 +1,24 @@
-package agh.ics.oop;
+package agh.ics.oop.models;
+
+import agh.ics.oop.enums.MapDirection;
+import agh.ics.oop.enums.MoveDirection;
+import agh.ics.oop.interfaces.IWorldMap;
 
 import java.util.List;
 
 public class Animal {
-    private MapDirection mapDirection;
-    private Vector2d position;
+    private MapDirection mapDirection = MapDirection.NORTH;
+    private Vector2d position = new Vector2d(0, 0);
 
-    private final Vector2d topRight = new Vector2d(4, 4);
-    private final Vector2d leftBottom = new Vector2d(0, 0);
+    private final IWorldMap map;
 
-    public Animal() {
-        this.mapDirection = MapDirection.NORTH;
-        this.position = new Vector2d(2, 2);
+    public Animal(IWorldMap map) {
+        this.map = map;
+    }
+
+    public Animal(Vector2d position, IWorldMap map) {
+        this.position = position;
+        this.map = map;
     }
 
     public MapDirection getMapDirection() {
@@ -32,24 +39,29 @@ public class Animal {
 
     public void move(MoveDirection direction) {
         switch (direction) {
-            case RIGHT -> setMapDirection(mapDirection.next());
-            case LEFT -> setMapDirection(mapDirection.previous());
+            case RIGHT -> {
+                setMapDirection(mapDirection.next());
+                map.update(this);
+            }
+            case LEFT -> {
+                setMapDirection(mapDirection.previous());
+                map.update(this);
+            }
             case FORWARD -> {
                 var newPosition = position.add(mapDirection.toUnitVector());
-                if (canMove(newPosition)) {
+                if (map.canMoveTo(newPosition)) {
+                    map.update(position, newPosition);
                     setPosition(newPosition);
                 }
             }
             case BACKWARD -> {
                 var newPosition = position.subtract(mapDirection.toUnitVector());
-                if (canMove(newPosition)) {
+                if (map.canMoveTo(newPosition)) {
+                    map.update(position, newPosition);
                     setPosition(newPosition);
                 }
             }
         }
-    }
-    private boolean canMove(Vector2d newPosition) {
-        return newPosition.follows(leftBottom) && newPosition.precedes(topRight);
     }
 
     public void move(List<MoveDirection> directions) {
@@ -62,7 +74,6 @@ public class Animal {
 
     @Override
     public String toString() {
-        return "\nMap Direction: " + mapDirection +
-                "\nPosition: " + position;
+        return mapDirection.toString();
     }
 }

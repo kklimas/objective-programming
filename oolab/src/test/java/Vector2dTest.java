@@ -1,4 +1,4 @@
-import agh.ics.oop.Vector2d;
+import agh.ics.oop.models.Vector2d;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
