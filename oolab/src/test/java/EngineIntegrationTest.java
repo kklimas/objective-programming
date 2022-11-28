@@ -1,6 +1,7 @@
 import agh.ics.oop.enums.MoveDirection;
 import agh.ics.oop.interfaces.IEngine;
 import agh.ics.oop.interfaces.IWorldMap;
+import agh.ics.oop.models.Animal;
 import agh.ics.oop.models.RectangularMap;
 import agh.ics.oop.models.Vector2d;
 import agh.ics.oop.tools.MapVisualizer;
@@ -23,7 +24,7 @@ public class EngineIntegrationTest {
     @Test
     void case1() {
         var a1 = new Vector2d(0, 0);
-        directions = new String[]{"f", "b", "f", "a", "l", "l", "f", "f"};
+        directions = new String[]{"f", "b", "f", "a", "l", "l", "f"};
         parsedDirections = parse(directions);
         map = new RectangularMap(10, 5);
         positions = new Vector2d[] { a1 };

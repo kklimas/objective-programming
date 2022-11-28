@@ -6,9 +6,8 @@ import agh.ics.oop.interfaces.IWorldMap;
 
 import java.util.List;
 
-public class Animal {
+public class Animal extends AbstractMapElement{
     private MapDirection mapDirection = MapDirection.NORTH;
-    private Vector2d position = new Vector2d(0, 0);
 
     private final IWorldMap map;
 
@@ -68,12 +67,8 @@ public class Animal {
         directions.forEach(this::move);
     }
 
-    public boolean isAt(Vector2d position) {
-        return this.position.equals(position);
-    }
-
     @Override
     public String toString() {
-        return mapDirection.toString();
+        return super.toString(mapDirection.toString());
     }
 }

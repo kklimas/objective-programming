@@ -14,11 +14,6 @@ public enum MapDirection {
         this.value = value;
     }
 
-    @Override
-    public String toString(){
-        return value;
-    }
-
     public MapDirection next() {
         return switch (this) {
             case NORTH -> MapDirection.EAST;
@@ -44,5 +39,10 @@ public enum MapDirection {
             case SOUTH -> new Vector2d(0, -1);
             default -> new Vector2d(1, 0);
         };
+    }
+
+    @Override
+    public String toString(){
+        return value;
     }
 }
