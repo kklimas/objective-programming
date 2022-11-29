@@ -10,7 +10,7 @@ public class RectangularMap extends AbstractWorldMap {
     }
 
     private boolean positionInBounds(Vector2d position) {
-        return position.follows(new Vector2d(0, 0)) && position.precedes(new Vector2d(width, height));
+        return position.follows(new Vector2d(0, 0)) && position.precedes(new Vector2d(width - 1, height - 1));
     }
 
     @Override

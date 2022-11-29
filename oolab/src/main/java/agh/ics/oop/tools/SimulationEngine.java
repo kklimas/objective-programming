@@ -2,6 +2,7 @@ package agh.ics.oop.tools;
 
 import agh.ics.oop.enums.MoveDirection;
 import agh.ics.oop.interfaces.IEngine;
+import agh.ics.oop.interfaces.IPositionChangeObserver;
 import agh.ics.oop.interfaces.IWorldMap;
 import agh.ics.oop.models.Animal;
 import agh.ics.oop.models.Vector2d;
@@ -35,6 +36,7 @@ public class SimulationEngine implements IEngine {
     private void place() {
         for (Vector2d position: positions) {
             var animal = new Animal(position, map);
+            animal.addObserver((IPositionChangeObserver) map);
             animals.add(animal);
             map.place(new Animal(position, map));
         }

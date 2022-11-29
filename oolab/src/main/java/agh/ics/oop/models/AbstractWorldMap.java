@@ -1,13 +1,14 @@
 package agh.ics.oop.models;
 
 import agh.ics.oop.interfaces.IMapElement;
+import agh.ics.oop.interfaces.IPositionChangeObserver;
 import agh.ics.oop.interfaces.IWorldMap;
 import agh.ics.oop.tools.MapVisualizer;
 
 import java.util.HashMap;
 import java.util.Map;
 
-abstract class AbstractWorldMap implements IWorldMap {
+abstract class AbstractWorldMap implements IWorldMap, IPositionChangeObserver {
 
     protected Map<Vector2d, IMapElement> entities = new HashMap<>();
     protected final MapVisualizer visualizer = new MapVisualizer(this);
@@ -36,13 +37,14 @@ abstract class AbstractWorldMap implements IWorldMap {
     }
 
     @Override
-    public void update(Vector2d oldPos, Vector2d newPos) {
+    public void positionChanged(Vector2d oldPos, Vector2d newPos) {
         var entity = entities.remove(oldPos);
+        entity.setPosition(newPos);
         entities.put(newPos, entity);
     }
 
     @Override
-    public void update(Animal animal) {
+    public void stateChanged(Animal animal) {
         entities.put(animal.getPosition(), animal);
     }
 

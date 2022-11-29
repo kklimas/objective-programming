@@ -9,23 +9,6 @@ public class GrassField extends AbstractWorldMap {
         placeGrasses();
     }
 
-    @Override
-    public void update(Vector2d oldPos, Vector2d newPos) {
-        if (objectAt(newPos) != null && objectAt(newPos).getClass().equals(Grass.class)) {
-            generateGrass();
-        }
-        super.update(oldPos, newPos);
-    }
-
-    @Override
-    public void update(Animal animal) {
-        if (objectAt(animal.getPosition()) != null
-                && objectAt(animal.getPosition()).getClass().equals(Grass.class)) {
-            generateGrass();
-        }
-        super.update(animal);
-    }
-
     private void placeGrasses() {
         for (int i = 0; i < grassCount; i++) {
             generateGrass();
@@ -45,6 +28,14 @@ public class GrassField extends AbstractWorldMap {
                 this.entities.put(v, new Grass(v));
             }
         }
+    }
+
+    @Override
+    public void positionChanged(Vector2d oldPos, Vector2d newPos) {
+        if (entities.get(newPos) != null && entities.get(newPos).getClass().equals(Grass.class)) {
+            generateGrass();
+        }
+        super.positionChanged(oldPos, newPos);
     }
 
     @Override

@@ -11,9 +11,6 @@ import java.util.List;
 import static agh.ics.oop.tools.OptionParser.parse;
 
 public class World {
-    // w momencie najechania zwierzecia na trawe, trawa znika poniewaz pod danym w kluczem w hashmapie zapisuje sie
-    // zwierze (usuwa kepka trawy)
-
     public static void main(String[] args) {
         List<MoveDirection> directions = parse(args);
         IWorldMap map = new GrassField(10);

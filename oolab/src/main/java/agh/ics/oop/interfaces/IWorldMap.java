@@ -48,15 +48,4 @@ public interface IWorldMap {
      * @return Object or null if the position is not occupied.
      */
     Object objectAt(Vector2d position);
-
-    /**
-     * Update animal position on the map after move.
-     *
-     * @param (oldPos, newPos)
-     *            Old and current animal position.
-     */
-    void update(Vector2d oldPos, Vector2d newPos);
-
-    void update(Animal animal);
-
 }

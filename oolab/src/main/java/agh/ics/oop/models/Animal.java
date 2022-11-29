@@ -2,11 +2,15 @@ package agh.ics.oop.models;
 
 import agh.ics.oop.enums.MapDirection;
 import agh.ics.oop.enums.MoveDirection;
+import agh.ics.oop.interfaces.IPositionChangeObserver;
 import agh.ics.oop.interfaces.IWorldMap;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Animal extends AbstractMapElement{
+
+    private List<IPositionChangeObserver> observers = new ArrayList<>();
     private MapDirection mapDirection = MapDirection.NORTH;
 
     private final IWorldMap map;
@@ -32,31 +36,42 @@ public class Animal extends AbstractMapElement{
         this.mapDirection = mapDirection;
     }
 
-    public void setPosition(Vector2d position) {
-        this.position = position;
+    public void addObserver(IPositionChangeObserver observer) {
+        this.observers.add(observer);
+    }
+    public void removeObserver(IPositionChangeObserver observer) {
+        this.observers.remove(observer);
+    }
+
+    public void positionChanged(Vector2d oldPos, Vector2d newPos) {
+        observers.forEach(observer -> observer.positionChanged(oldPos, newPos));
+    }
+
+    public void stateChanged() {
+        observers.forEach(observer -> observer.stateChanged(this));
     }
 
     public void move(MoveDirection direction) {
         switch (direction) {
             case RIGHT -> {
                 setMapDirection(mapDirection.next());
-                map.update(this);
+                stateChanged();
             }
             case LEFT -> {
                 setMapDirection(mapDirection.previous());
-                map.update(this);
+                stateChanged();
             }
             case FORWARD -> {
                 var newPosition = position.add(mapDirection.toUnitVector());
                 if (map.canMoveTo(newPosition)) {
-                    map.update(position, newPosition);
+                    positionChanged(position, newPosition);
                     setPosition(newPosition);
                 }
             }
             case BACKWARD -> {
                 var newPosition = position.subtract(mapDirection.toUnitVector());
                 if (map.canMoveTo(newPosition)) {
-                    map.update(position, newPosition);
+                    positionChanged(position, newPosition);
                     setPosition(newPosition);
                 }
             }

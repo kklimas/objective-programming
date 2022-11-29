@@ -9,6 +9,10 @@ abstract class AbstractMapElement implements IMapElement {
         return this.position.equals(position);
     }
 
+    public void setPosition(Vector2d pos) {
+        this.position = pos;
+    }
+
     public String toString(String sign) {
         return sign;
     }
