@@ -27,16 +27,14 @@ public interface IWorldMap {
      *            The animal to place on the map.
      * @return True if the animal was placed. The animal cannot be placed if the map is already occupied.
      */
-    boolean place(Animal animal);
+    boolean place(IMapElement mapElement);
 
     /**
-     * Return true if given position on the map is occupied. Should not be
-     * confused with canMove since there might be empty positions where the animal
-     * cannot move.
+     * Return true if given entity was placed
      *
      * @param position
      *            Position to check.
-     * @return True if the position is occupied.
+     * @return True if the entity was places.
      */
     boolean isOccupied(Vector2d position);
 

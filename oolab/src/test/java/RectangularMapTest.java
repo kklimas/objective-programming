@@ -1,3 +1,4 @@
+import agh.ics.oop.interfaces.IPositionChangeObserver;
 import agh.ics.oop.interfaces.IWorldMap;
 import agh.ics.oop.models.Animal;
 import agh.ics.oop.models.GrassField;
@@ -44,10 +45,10 @@ public class RectangularMapTest {
     }
 
     @Test
-    void update() {
+    void positionChanged() {
         var v = new Vector2d(1, 1);
-        sheepDolly.setPosition(v);
-        map.update(sheepDolly);
+        sheepDolly.addObserver((IPositionChangeObserver) map);
+        sheepDolly.positionChanged(sheepDolly.getPosition(), v);
         assertEquals(sheepDolly, map.objectAt(v));
     }
 }

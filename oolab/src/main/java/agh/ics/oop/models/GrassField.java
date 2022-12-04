@@ -1,11 +1,15 @@
 package agh.ics.oop.models;
 
+import agh.ics.oop.interfaces.IMapElement;
+
 public class GrassField extends AbstractWorldMap {
 
     private final int grassCount;
+    private final MapBoundary boundary;
 
-    public GrassField(int grassCount) {
+    public GrassField(MapBoundary boundary, int grassCount) {
         this.grassCount = grassCount;
+        this.boundary = boundary;
         placeGrasses();
     }
 
@@ -25,9 +29,18 @@ public class GrassField extends AbstractWorldMap {
             var v = new Vector2d(x, y);
             if (objectAt(v) == null) {
                 taken = false;
-                this.entities.put(v, new Grass(v));
+                var grass = new Grass(v);
+                boundary.place(grass);
+                this.entities.put(v, grass);
             }
         }
+    }
+
+
+    @Override
+    public boolean place(IMapElement mapElement) {
+        boundary.place(mapElement);
+        return super.place(mapElement);
     }
 
     @Override
@@ -40,18 +53,7 @@ public class GrassField extends AbstractWorldMap {
 
     @Override
     public String toString() {
-        // calculate borders
-        var xVal = entities.keySet().stream()
-                .map(obj -> obj.x)
-                .sorted()
-                .toList();
-        var yVal = entities.keySet().stream()
-                .map(obj -> obj.y)
-                .sorted()
-                .toList();
-
-        return super.toString(
-                new Vector2d(xVal.get(0), yVal.get(0)),
-                new Vector2d(xVal.get(xVal.size()-1), yVal.get(yVal.size()-1)));
+        var coordinates = boundary.getBoundaries();
+        return super.toString(coordinates.get(0), coordinates.get(1));
     }
 }

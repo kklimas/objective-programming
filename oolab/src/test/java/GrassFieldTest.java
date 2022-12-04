@@ -1,6 +1,8 @@
+import agh.ics.oop.interfaces.IPositionChangeObserver;
 import agh.ics.oop.interfaces.IWorldMap;
 import agh.ics.oop.models.Animal;
 import agh.ics.oop.models.GrassField;
+import agh.ics.oop.models.MapBoundary;
 import agh.ics.oop.models.Vector2d;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -12,10 +14,11 @@ public class GrassFieldTest {
     private IWorldMap map;
     private Vector2d position;
     private Animal sheepDolly;
+    private final MapBoundary boundary = new MapBoundary();
 
     @BeforeEach
     public void setup() {
-        map = new GrassField(10);
+        map = new GrassField(boundary, 10);
         position = new Vector2d(0, 0);
         sheepDolly = new Animal(position, map);
         map.place(sheepDolly);
@@ -43,10 +46,10 @@ public class GrassFieldTest {
     }
 
     @Test
-    void update() {
+    void positionChanged() {
         var v = new Vector2d(1, 1);
-        sheepDolly.setPosition(v);
-        map.update(sheepDolly);
+        sheepDolly.addObserver((IPositionChangeObserver) map);
+        sheepDolly.positionChanged(sheepDolly.getPosition(), v);
         assertEquals(sheepDolly, map.objectAt(v));
     }
 }

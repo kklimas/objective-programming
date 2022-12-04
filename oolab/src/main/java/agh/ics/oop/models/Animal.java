@@ -10,14 +10,10 @@ import java.util.List;
 
 public class Animal extends AbstractMapElement{
 
-    private List<IPositionChangeObserver> observers = new ArrayList<>();
+    private final List<IPositionChangeObserver> observers = new ArrayList<>();
     private MapDirection mapDirection = MapDirection.NORTH;
 
     private final IWorldMap map;
-
-    public Animal(IWorldMap map) {
-        this.map = map;
-    }
 
     public Animal(Vector2d position, IWorldMap map) {
         this.position = position;

@@ -8,6 +8,8 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
+
+import java.util.ArrayList;
 import java.util.List;
 import static agh.ics.oop.tools.OptionParser.parse;
 
@@ -116,29 +118,27 @@ public class AnimalIntegrationTest {
         sheepDolly.move(directions1);
         assertFalse(isOutOfMap(sheepDolly.getPosition()));
 
-//        sheepDolly.move(directions2);
-//        assertFalse(isOutOfMap(sheepDolly.getPosition()));
-//
-//        sheepDolly.move(directions3);
-//        assertFalse(isOutOfMap(sheepDolly.getPosition()));
+        sheepDolly.move(directions2);
+        assertFalse(isOutOfMap(sheepDolly.getPosition()));
+
+        sheepDolly.move(directions3);
+        assertFalse(isOutOfMap(sheepDolly.getPosition()));
     }
 
     @Test
     public void parseToolTest() {
-        String[] data1 = new String[0];
-        String[] data2 = new String[]{"forward", "b", "ri", "eft", "e", "f"};
-        String[] data3 = new String[]{"a", "bac", "c", "d", "e", "backward"};
+        var data1 =  new ArrayList<String>();
+        var data2 = List.of("forward", "b", "f");
+        var data3 = List.of("a", "bac", "c", "d", "e", "backward");
 
         var res1 = parse(data1);
         var res2 = parse(data2);
-        var res3 = parse(data3);
 
         assertEquals(0, res1.size());
         assertEquals(3, res2.size());
-        assertEquals(1, res3.size());
-
         res2.forEach(direction -> assertEquals(MoveDirection.class, direction.getClass()));
-        res3.forEach(direction -> assertEquals(MoveDirection.class, direction.getClass()));
+
+        assertThrows(IllegalArgumentException.class, () -> parse(data3));
     }
     private boolean isOutOfMap(Vector2d position) {
         var leftBottom = new Vector2d(0, 0);

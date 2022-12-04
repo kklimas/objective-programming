@@ -17,13 +17,15 @@ abstract class AbstractWorldMap implements IWorldMap, IPositionChangeObserver {
     public boolean canMoveTo(Vector2d position) {
         return !isOccupied(position) || objectAt(position).getClass().equals(Grass.class);
     }
+
     @Override
-    public boolean place(Animal animal) {
-        if (!isOccupied(animal.getPosition())) {
-            entities.put(animal.getPosition(), animal);
+    public boolean place(IMapElement mapElement) {
+        if (!isOccupied(mapElement.getPosition())
+                || objectAt(mapElement.getPosition()).getClass().equals(Grass.class)) {
+            entities.put(mapElement.getPosition(), mapElement);
             return true;
         }
-        return false;
+        throw new IllegalArgumentException("Animal cannot be placed at " + mapElement.getPosition().toString());
     }
 
     @Override
@@ -44,8 +46,9 @@ abstract class AbstractWorldMap implements IWorldMap, IPositionChangeObserver {
     }
 
     @Override
-    public void stateChanged(Animal animal) {
-        entities.put(animal.getPosition(), animal);
+    public void stateChanged(IMapElement entity) {
+        entities.remove(entity.getPosition());
+        entities.put(entity.getPosition(), entity);
     }
 
     public String toString(Vector2d v1, Vector2d v2) {

@@ -7,5 +7,5 @@ public interface IPositionChangeObserver {
     void positionChanged(Vector2d oldPos, Vector2d newPos);
 
     // for direction changes
-    void stateChanged(Animal animal);
+    void stateChanged(IMapElement entity);
 }
