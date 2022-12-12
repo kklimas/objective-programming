@@ -12,6 +12,11 @@ public class Grass extends AbstractMapElement{
     }
 
     @Override
+    public String getImagePath() {
+        return SRC_PATH.formatted("grass");
+    }
+
+    @Override
     public String toString() {
         return super.toString("*");
     }

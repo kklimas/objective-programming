@@ -28,6 +28,17 @@ public class Animal extends AbstractMapElement{
         return position;
     }
 
+    @Override
+    public String getImagePath() {
+
+        return switch (mapDirection) {
+            case NORTH -> SRC_PATH.formatted("up");
+            case EAST -> SRC_PATH.formatted("right");
+            case WEST -> SRC_PATH.formatted("left");
+            default -> SRC_PATH.formatted("down");
+        };
+    }
+
     public void setMapDirection(MapDirection mapDirection) {
         this.mapDirection = mapDirection;
     }

@@ -1,4 +1,5 @@
 import agh.ics.oop.enums.MoveDirection;
+import agh.ics.oop.gui.App;
 import agh.ics.oop.interfaces.IEngine;
 import agh.ics.oop.interfaces.IWorldMap;
 import agh.ics.oop.models.GrassField;
@@ -31,7 +32,8 @@ public class EngineIntegrationTest {
         boundary = new MapBoundary();
         map = new RectangularMap(10, 5);
         positions = new Vector2d[] { a1 };
-        engine = new SimulationEngine(parsedDirections, map, boundary, positions);
+        engine = new SimulationEngine(map, boundary, positions);
+        engine.setDirections(parsedDirections);
         engine.run();
         assertNotNull(map.objectAt(a1));
     }
@@ -45,7 +47,8 @@ public class EngineIntegrationTest {
         boundary = new MapBoundary();
         map = new RectangularMap(2, 2);
         positions = new Vector2d[] { a1, a2 };
-        engine = new SimulationEngine(parsedDirections, map, boundary, positions);
+        engine = new SimulationEngine(map, boundary, positions);
+        engine.setDirections(parsedDirections);
         engine.run();
 
         var visualizer = new MapVisualizer(map);
@@ -63,8 +66,8 @@ public class EngineIntegrationTest {
         boundary = new MapBoundary();
         map = new GrassField(boundary, 10);
         positions = new Vector2d[] {v1, v1};
-        engine = new SimulationEngine(parsedDirections, map, boundary, positions);
-
+        engine = new SimulationEngine(map, boundary, positions);
+        engine.setDirections(parsedDirections);
         assertThrows(IllegalArgumentException.class, () -> engine.run());
     }
 
@@ -77,7 +80,8 @@ public class EngineIntegrationTest {
         boundary = new MapBoundary();
         map = new GrassField(boundary, 10);
         positions = new Vector2d[] {v1, v2};
-        engine = new SimulationEngine(parsedDirections, map, boundary, positions);
+        engine = new SimulationEngine(map, boundary, positions);
+        engine.setDirections(parsedDirections);
         engine.run();
         assertTrue(map.isOccupied(new Vector2d(0, 0)));
         assertTrue(map.isOccupied(new Vector2d(1, 5)));
