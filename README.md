@@ -9,4 +9,4 @@ Every class is different however it upgrades one mini-project, therefore
 repository is split to tags. Tag of name labXX references to class 
 of number XX.
 
-Main project is in another repo (evolution-simulator)[https://github.com/kklimas/evolution-simulator].
+Main project is in another repo [evolution-simulator](https://github.com/kklimas/evolution-simulator).
